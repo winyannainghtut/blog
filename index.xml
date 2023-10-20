@@ -8,6 +8,52 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 20 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://khawstech.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Creating RDS&#43;EC2 (Two Tier Architecture)</title>
+      <link>https://khawstech.com/posts/creating-rds&#43;ec2-two-tier-architecture/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://khawstech.com/posts/creating-rds&#43;ec2-two-tier-architecture/</guid>
+      <description>Creating RDS + EC2 (Two Tier Architecture) Objective To connect RDS with EC2.
+ Install MySQL Client on EC2. Using mysql command line to connect RDS. Create Database name in HC_WYNH  EC2 instance (Ubuntu Server) with app-server-sg (security Group) RDS instance with db-server-sg (security group) Installing Mysql client on EC2 (ubuntu). sudo apt-get install mysql-clientUsing mysql command to connect with RDS. mysql -h {DB End Point} -P LOCAL_PORT -u RDS_USER -pCreating a Database :wq!</description>
+    </item>
+    
+    <item>
+      <title>CreatingKeyPair</title>
+      <link>https://khawstech.com/posts/creatingkeypair/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://khawstech.com/posts/creatingkeypair/</guid>
+      <description>Creating Key Pair using AWS CFN Create key pairs - Amazon Elastic Compute Cloud
+Objective  To create AWS Key Pair using Cloudformation. (Using the default profile)  Create a CloudFormation Template: Start by creating a CloudFormation template in YAML format.**`AWS::EC2::KeyPair`** is defined with the name “wynhkeypair&amp;quot;. You can change the **`KeyName`** property to your desired key pair name. AWSTemplateFormatVersion:&amp;#34;2010-09-09&amp;#34;Resources:wynhkeypair:#edit here Type:AWS::EC2::KeyPairProperties:KeyName:wynhkeypairDeploy the Template: aws cloudformation create-stack --stack-name wynhkeypair --template-body file://keypair-wynh.</description>
+    </item>
+    
+    <item>
+      <title>CreatingKeyPair</title>
+      <link>https://khawstech.com/posts/ec2-&#43;-keypair-creation/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://khawstech.com/posts/ec2-&#43;-keypair-creation/</guid>
+      <description>EC2 + Keypair creation Create key pairs - Amazon Elastic Compute Cloud
+AWS::EC2::Instance - AWS CloudFormation
+Objective
+ To create AWS KeyPair + EC2 using Cloudformation. (Using the default profile)  Create a CloudFormation Template: Make a yaml file named ec2cfn.yaml. Added the below template.  AWSTemplateFormatVersion:&amp;#34;2010-09-09&amp;#34;Description:CFN+EC2+KeyPairResources:wynhkeypair:Type:&amp;#39;AWS::EC2::KeyPair&amp;#39;Properties:KeyName:wynhkeypairEc2Instance:Type:&amp;#39;AWS::EC2::Instance&amp;#39;Properties:InstanceType:&amp;#39;t2.micro&amp;#39;AvailabilityZone:&amp;#39;ap-southeast-1a&amp;#39;ImageId:&amp;#39;ami-002843b0a9e09324a&amp;#39;KeyName:!RefwynhkeypairRun the code: aws cloudformation create-stack --stack-name ec2nkeypair --template-body file://ec2cfn.yamlOutput:
+The keypair(wynhkeypair) is attached.
+Describe the key pair: aws ec2 describe-key-pairs --filters Name=key-name,Values=wynhkeypair --query KeyPairs[*].</description>
+    </item>
+    
+    <item>
+      <title>CreatingKeyPair</title>
+      <link>https://khawstech.com/posts/vpcwithcfn/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://khawstech.com/posts/vpcwithcfn/</guid>
+      <description>VPC creation with CFN AWS::EC2::VPC - AWS CloudFormation
+AWS::EC2::Subnet - AWS CloudFormation
+AWS::EC2::NatGateway - AWS CloudFormation
+Objective  To create AWS VPC,Public Subnets, Private Subnets and NAT Gateway using Cloudformation.  Diagram Main Template AWSTemplateFormatVersion:&amp;#39;2010-09-09&amp;#39;Description:CreatingVPCusingCFNResources:# NewVPCwynhVPC:Type:AWS::EC2::VPCProperties:CidrBlock:192.168.0.0/16EnableDnsHostnames:trueEnableDnsSupport:trueTags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;wynhVPC&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# public-subnet-1pubSubnet1:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.0.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1a&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;pubSubnet1&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# public-subnet-2pubSubnet2:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.1.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1b&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;pubSubnet2&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# public-subnet-3pubSubnet3:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.2.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1c&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;pubSubnet3&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# private-subnet-1privateSubnet1:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.3.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1a&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;privateSubnet1&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# private-subnet-2privateSubnet2:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.4.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1b&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;privateSubnet2&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# private-subnet-3privateSubnet3:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.5.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1c&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;privateSubnet3&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# internet-gatewaywynhIGW:Type:AWS::EC2::InternetGatewayProperties:Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;wynhIGW&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# VPC &amp;lt;--&amp;gt; IGW attachmentVPCtoIGW:Type:AWS::EC2::VPCGatewayAttachmentProperties:VpcId:!</description>
+    </item>
+    
+    <item>
       <title>How IAM Policy working?</title>
       <link>https://khawstech.com/posts/iam-policy/</link>
       <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
