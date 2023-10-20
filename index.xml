@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Khaw&#39;s Blog</title>
+    <link>https://khawstech.com/</link>
+    <description>Recent content on Khaw&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 20 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://khawstech.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How IAM Policy working?</title>
+      <link>https://khawstech.com/posts/iam-policy/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://khawstech.com/posts/iam-policy/</guid>
+      <description>Objective IAM Policy
+ Create EC2 Instances Specific Instance Type (t2.micro, t3.micro) Specific Region (ap-southeast-1) Create RDS Instances Specific Region (ap-southeast-1)  Create IAM User Attach the above policy.
+IAM Policy {&amp;#34;Version&amp;#34;: &amp;#34;2012-10-17&amp;#34;,&amp;#34;Statement&amp;#34;: [{&amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34;,&amp;#34;Action&amp;#34;: [&amp;#34;ec2:DescribeAccountAttributes&amp;#34;,&amp;#34;ec2:DescribeInstances&amp;#34;,&amp;#34;ec2:DescribeImages&amp;#34;,&amp;#34;ec2:DescribeInstanceTypes&amp;#34;,&amp;#34;ec2:DescribeKeyPairs&amp;#34;,&amp;#34;ec2:CreateKeyPair&amp;#34;,&amp;#34;ec2:DescribeVpcs&amp;#34;,&amp;#34;ec2:DescribeSubnets&amp;#34;,&amp;#34;ec2:DescribeSecurityGroups&amp;#34;,&amp;#34;ec2:CreateSecurityGroup&amp;#34;,&amp;#34;ec2:AuthorizeSecurityGroupIngress&amp;#34;],&amp;#34;Resource&amp;#34;: &amp;#34;*&amp;#34;},{&amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34;,&amp;#34;Action&amp;#34;: &amp;#34;ec2:RunInstances&amp;#34;,&amp;#34;Resource&amp;#34;: [&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:network-interface/*&amp;#34;,&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:volume/*&amp;#34;,&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:key-pair/*&amp;#34;,&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:security-group/*&amp;#34;,&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:subnet/subnet-*&amp;#34;,&amp;#34;arn:aws:ec2:ap-southeast-1::image/ami-*&amp;#34;]},{&amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34;,&amp;#34;Action&amp;#34;: [&amp;#34;ec2:RunInstances&amp;#34;,&amp;#34;ec2:StartInstances&amp;#34;,&amp;#34;ec2:StopInstances&amp;#34;,&amp;#34;ec2:TerminateInstances&amp;#34;,&amp;#34;ec2:CreateTags&amp;#34;],&amp;#34;Resource&amp;#34;: [&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:instance/*&amp;#34;],&amp;#34;Condition&amp;#34;: {&amp;#34;StringEquals&amp;#34;: {&amp;#34;ec2:InstanceType&amp;#34;: [&amp;#34;t2.</description>
+    </item>
+    
+    <item>
+      <title>Networking Services in AWS</title>
+      <link>https://khawstech.com/posts/networking-services-in-aws/</link>
+      <pubDate>Thu, 19 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://khawstech.com/posts/networking-services-in-aws/</guid>
+      <description>Big Picture of AWS Networking Services VPC ဆိုတာဘာလဲပေါ့ ?
+Virtual private cloud လို့ခေါ်တဲ့ VPC ထဲမှာကျွန်တ်ောတို့ Networking နဲ့ပတ်သတ်တဲ့ AWS ရဲ့ services တွေကိုတစ်ချက် breakdown လုပ်ကြည့်လိုက်ရအောင်။
+Subnets AWS ထဲမှာ ကျွန်တော်တို့က VPC တစ်ခုကို Create လုပ်လိုက်ပြီဆိုတာနဲ့ CIDR တစ်ခုကို သတ်မှတ်ပေးရမှာပါ။ အဲ့ဒီ CIDR ထဲကမှ Subnet တွေကို ပြန်ပြီး define လုပ်ပေးလို့ရပါတယ်။ ဥပမာ - 10.0.0.0/16 ဆိုတဲ့ CIDR range ထဲကနေပြီးတော့ 10.0.1.0/24 ဆိုတဲ့ Subnet ပြန်ခွဲလိုက်တာမျိုးပါ။ CIDR တွေကို ကြိုက်တဲ့ IP range ယူသုံးနိုင်ပါတယ်။ Public IP range တွေကို လဲ လိုအပ်ချက်အရယူသုံးလို့ရပေမယ့် နောက်ပိုင်း ပြဿနာအကြီးကြီးတတ်နိုင်တဲ့ အတွက် သတိပြုပြီးသုံးသင့်ပါတယ် ။ Private IP range ထဲက IP တွေကိုလဲ နောက်ပိုင်း VPC တွေတစ်ခုနဲ့တစ်ခုချိတ်ဆက်ဖို့ရှိတယ်ဆိုရင် မထပ်အောင်သုံးသင့်ပါတယ်။ နောက်ပြီးတော့ AWS မှာ reserved IP ဆိုတာရှိပါတယ်။ 10.</description>
+    </item>
+    
+    
+  </channel>
+</rss>

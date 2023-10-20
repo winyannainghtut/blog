@@ -1,0 +1,276 @@
+<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>How IAM Policy working? | Khaw's Blog</title><meta name=keywords content><meta name=description content="Objective IAM Policy
+ Create EC2 Instances Specific Instance Type (t2.micro, t3.micro) Specific Region (ap-southeast-1) Create RDS Instances Specific Region (ap-southeast-1)  Create IAM User Attach the above policy.
+IAM Policy {&#34;Version&#34;: &#34;2012-10-17&#34;,&#34;Statement&#34;: [{&#34;Effect&#34;: &#34;Allow&#34;,&#34;Action&#34;: [&#34;ec2:DescribeAccountAttributes&#34;,&#34;ec2:DescribeInstances&#34;,&#34;ec2:DescribeImages&#34;,&#34;ec2:DescribeInstanceTypes&#34;,&#34;ec2:DescribeKeyPairs&#34;,&#34;ec2:CreateKeyPair&#34;,&#34;ec2:DescribeVpcs&#34;,&#34;ec2:DescribeSubnets&#34;,&#34;ec2:DescribeSecurityGroups&#34;,&#34;ec2:CreateSecurityGroup&#34;,&#34;ec2:AuthorizeSecurityGroupIngress&#34;],&#34;Resource&#34;: &#34;*&#34;},{&#34;Effect&#34;: &#34;Allow&#34;,&#34;Action&#34;: &#34;ec2:RunInstances&#34;,&#34;Resource&#34;: [&#34;arn:aws:ec2:ap-southeast-1:764523291456:network-interface/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:volume/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:key-pair/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:security-group/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:subnet/subnet-*&#34;,&#34;arn:aws:ec2:ap-southeast-1::image/ami-*&#34;]},{&#34;Effect&#34;: &#34;Allow&#34;,&#34;Action&#34;: [&#34;ec2:RunInstances&#34;,&#34;ec2:StartInstances&#34;,&#34;ec2:StopInstances&#34;,&#34;ec2:TerminateInstances&#34;,&#34;ec2:CreateTags&#34;],&#34;Resource&#34;: [&#34;arn:aws:ec2:ap-southeast-1:764523291456:instance/*&#34;],&#34;Condition&#34;: {&#34;StringEquals&#34;: {&#34;ec2:InstanceType&#34;: [&#34;t2."><meta name=author content="Win Yan Naing Htut"><link rel=canonical href=https://khawstech.com/posts/iam-policy/><meta name=google-site-verification content="XYZabc"><meta name=yandex-verification content="XYZabc"><meta name=msvalidate.01 content="XYZabc"><link crossorigin=anonymous href=/assets/css/stylesheet.735c14aef5bd53538764fbe842da3b6b2041059e13045d88f457bc438e58e012.css integrity="sha256-c1wUrvW9U1OHZPvoQto7ayBBBZ4TBF2I9Fe8Q45Y4BI=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad();></script><link rel=icon href=https://khawstech.com/%3Clink%20/%20abs%20url%3E><link rel=icon type=image/png sizes=16x16 href=https://khawstech.com/%3Clink%20/%20abs%20url%3E><link rel=icon type=image/png sizes=32x32 href=https://khawstech.com/%3Clink%20/%20abs%20url%3E><link rel=apple-touch-icon href=https://khawstech.com/%3Clink%20/%20abs%20url%3E><link rel=mask-icon href=https://khawstech.com/%3Clink%20/%20abs%20url%3E><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme: rgb(29, 30, 32);--entry: rgb(46, 46, 51);--primary: rgb(218, 218, 219);--secondary: rgb(155, 156, 157);--tertiary: rgb(65, 66, 68);--content: rgb(196, 196, 197);--hljs-bg: rgb(46, 46, 51);--code-bg: rgb(55, 56, 62);--border: rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','UA-123-45','auto');ga('send','pageview');}</script><meta property="og:title" content="How IAM Policy working?"><meta property="og:description" content="Objective IAM Policy
+ Create EC2 Instances Specific Instance Type (t2.micro, t3.micro) Specific Region (ap-southeast-1) Create RDS Instances Specific Region (ap-southeast-1)  Create IAM User Attach the above policy.
+IAM Policy {&#34;Version&#34;: &#34;2012-10-17&#34;,&#34;Statement&#34;: [{&#34;Effect&#34;: &#34;Allow&#34;,&#34;Action&#34;: [&#34;ec2:DescribeAccountAttributes&#34;,&#34;ec2:DescribeInstances&#34;,&#34;ec2:DescribeImages&#34;,&#34;ec2:DescribeInstanceTypes&#34;,&#34;ec2:DescribeKeyPairs&#34;,&#34;ec2:CreateKeyPair&#34;,&#34;ec2:DescribeVpcs&#34;,&#34;ec2:DescribeSubnets&#34;,&#34;ec2:DescribeSecurityGroups&#34;,&#34;ec2:CreateSecurityGroup&#34;,&#34;ec2:AuthorizeSecurityGroupIngress&#34;],&#34;Resource&#34;: &#34;*&#34;},{&#34;Effect&#34;: &#34;Allow&#34;,&#34;Action&#34;: &#34;ec2:RunInstances&#34;,&#34;Resource&#34;: [&#34;arn:aws:ec2:ap-southeast-1:764523291456:network-interface/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:volume/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:key-pair/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:security-group/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:subnet/subnet-*&#34;,&#34;arn:aws:ec2:ap-southeast-1::image/ami-*&#34;]},{&#34;Effect&#34;: &#34;Allow&#34;,&#34;Action&#34;: [&#34;ec2:RunInstances&#34;,&#34;ec2:StartInstances&#34;,&#34;ec2:StopInstances&#34;,&#34;ec2:TerminateInstances&#34;,&#34;ec2:CreateTags&#34;],&#34;Resource&#34;: [&#34;arn:aws:ec2:ap-southeast-1:764523291456:instance/*&#34;],&#34;Condition&#34;: {&#34;StringEquals&#34;: {&#34;ec2:InstanceType&#34;: [&#34;t2."><meta property="og:type" content="article"><meta property="og:url" content="https://khawstech.com/posts/iam-policy/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-10-20T00:00:00+00:00"><meta property="article:modified_time" content="2023-10-20T00:00:00+00:00"><meta property="og:site_name" content="Khaw's Blog"><meta name=twitter:card content="summary"><meta name=twitter:title content="How IAM Policy working?"><meta name=twitter:description content="Objective IAM Policy
+ Create EC2 Instances Specific Instance Type (t2.micro, t3.micro) Specific Region (ap-southeast-1) Create RDS Instances Specific Region (ap-southeast-1)  Create IAM User Attach the above policy.
+IAM Policy {&#34;Version&#34;: &#34;2012-10-17&#34;,&#34;Statement&#34;: [{&#34;Effect&#34;: &#34;Allow&#34;,&#34;Action&#34;: [&#34;ec2:DescribeAccountAttributes&#34;,&#34;ec2:DescribeInstances&#34;,&#34;ec2:DescribeImages&#34;,&#34;ec2:DescribeInstanceTypes&#34;,&#34;ec2:DescribeKeyPairs&#34;,&#34;ec2:CreateKeyPair&#34;,&#34;ec2:DescribeVpcs&#34;,&#34;ec2:DescribeSubnets&#34;,&#34;ec2:DescribeSecurityGroups&#34;,&#34;ec2:CreateSecurityGroup&#34;,&#34;ec2:AuthorizeSecurityGroupIngress&#34;],&#34;Resource&#34;: &#34;*&#34;},{&#34;Effect&#34;: &#34;Allow&#34;,&#34;Action&#34;: &#34;ec2:RunInstances&#34;,&#34;Resource&#34;: [&#34;arn:aws:ec2:ap-southeast-1:764523291456:network-interface/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:volume/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:key-pair/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:security-group/*&#34;,&#34;arn:aws:ec2:ap-southeast-1:764523291456:subnet/subnet-*&#34;,&#34;arn:aws:ec2:ap-southeast-1::image/ami-*&#34;]},{&#34;Effect&#34;: &#34;Allow&#34;,&#34;Action&#34;: [&#34;ec2:RunInstances&#34;,&#34;ec2:StartInstances&#34;,&#34;ec2:StopInstances&#34;,&#34;ec2:TerminateInstances&#34;,&#34;ec2:CreateTags&#34;],&#34;Resource&#34;: [&#34;arn:aws:ec2:ap-southeast-1:764523291456:instance/*&#34;],&#34;Condition&#34;: {&#34;StringEquals&#34;: {&#34;ec2:InstanceType&#34;: [&#34;t2."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"How IAM Policy working?","item":"https://khawstech.com/posts/iam-policy/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"How IAM Policy working?","name":"How IAM Policy working?","description":"Objective IAM Policy\n Create EC2 Instances Specific Instance Type (t2.micro, t3.micro) Specific Region (ap-southeast-1) Create RDS Instances Specific Region (ap-southeast-1)  Create IAM User Attach the above policy.\nIAM Policy {\r\u0026#34;Version\u0026#34;: \u0026#34;2012-10-17\u0026#34;,\r\u0026#34;Statement\u0026#34;: [\r{\r\u0026#34;Effect\u0026#34;: \u0026#34;Allow\u0026#34;,\r\u0026#34;Action\u0026#34;: [\r\u0026#34;ec2:DescribeAccountAttributes\u0026#34;,\r\u0026#34;ec2:DescribeInstances\u0026#34;,\r\u0026#34;ec2:DescribeImages\u0026#34;,\r\u0026#34;ec2:DescribeInstanceTypes\u0026#34;,\r\u0026#34;ec2:DescribeKeyPairs\u0026#34;,\r\u0026#34;ec2:CreateKeyPair\u0026#34;,\r\u0026#34;ec2:DescribeVpcs\u0026#34;,\r\u0026#34;ec2:DescribeSubnets\u0026#34;,\r\u0026#34;ec2:DescribeSecurityGroups\u0026#34;,\r\u0026#34;ec2:CreateSecurityGroup\u0026#34;,\r\u0026#34;ec2:AuthorizeSecurityGroupIngress\u0026#34;\r],\r\u0026#34;Resource\u0026#34;: \u0026#34;*\u0026#34;\r},\r{\r\u0026#34;Effect\u0026#34;: \u0026#34;Allow\u0026#34;,\r\u0026#34;Action\u0026#34;: \u0026#34;ec2:RunInstances\u0026#34;,\r\u0026#34;Resource\u0026#34;: [\r\u0026#34;arn:aws:ec2:ap-southeast-1:764523291456:network-interface/*\u0026#34;,\r\u0026#34;arn:aws:ec2:ap-southeast-1:764523291456:volume/*\u0026#34;,\r\u0026#34;arn:aws:ec2:ap-southeast-1:764523291456:key-pair/*\u0026#34;,\r\u0026#34;arn:aws:ec2:ap-southeast-1:764523291456:security-group/*\u0026#34;,\r\u0026#34;arn:aws:ec2:ap-southeast-1:764523291456:subnet/subnet-*\u0026#34;,\r\u0026#34;arn:aws:ec2:ap-southeast-1::image/ami-*\u0026#34;\r]\r},\r{\r\u0026#34;Effect\u0026#34;: \u0026#34;Allow\u0026#34;,\r\u0026#34;Action\u0026#34;: [\r\u0026#34;ec2:RunInstances\u0026#34;,\r\u0026#34;ec2:StartInstances\u0026#34;,\r\u0026#34;ec2:StopInstances\u0026#34;,\r\u0026#34;ec2:TerminateInstances\u0026#34;,\r\u0026#34;ec2:CreateTags\u0026#34;\r],\r\u0026#34;Resource\u0026#34;: [\r\u0026#34;arn:aws:ec2:ap-southeast-1:764523291456:instance/*\u0026#34;\r],\r\u0026#34;Condition\u0026#34;: {\r\u0026#34;StringEquals\u0026#34;: {\r\u0026#34;ec2:InstanceType\u0026#34;: [\r\u0026#34;t2.","keywords":[],"articleBody":"Objective IAM Policy\n Create EC2 Instances Specific Instance Type (t2.micro, t3.micro) Specific Region (ap-southeast-1) Create RDS Instances Specific Region (ap-southeast-1)  Create IAM User Attach the above policy.\nIAM Policy {\r\"Version\": \"2012-10-17\",\r\"Statement\": [\r{\r\"Effect\": \"Allow\",\r\"Action\": [\r\"ec2:DescribeAccountAttributes\",\r\"ec2:DescribeInstances\",\r\"ec2:DescribeImages\",\r\"ec2:DescribeInstanceTypes\",\r\"ec2:DescribeKeyPairs\",\r\"ec2:CreateKeyPair\",\r\"ec2:DescribeVpcs\",\r\"ec2:DescribeSubnets\",\r\"ec2:DescribeSecurityGroups\",\r\"ec2:CreateSecurityGroup\",\r\"ec2:AuthorizeSecurityGroupIngress\"\r],\r\"Resource\": \"*\"\r},\r{\r\"Effect\": \"Allow\",\r\"Action\": \"ec2:RunInstances\",\r\"Resource\": [\r\"arn:aws:ec2:ap-southeast-1:764523291456:network-interface/*\",\r\"arn:aws:ec2:ap-southeast-1:764523291456:volume/*\",\r\"arn:aws:ec2:ap-southeast-1:764523291456:key-pair/*\",\r\"arn:aws:ec2:ap-southeast-1:764523291456:security-group/*\",\r\"arn:aws:ec2:ap-southeast-1:764523291456:subnet/subnet-*\",\r\"arn:aws:ec2:ap-southeast-1::image/ami-*\"\r]\r},\r{\r\"Effect\": \"Allow\",\r\"Action\": [\r\"ec2:RunInstances\",\r\"ec2:StartInstances\",\r\"ec2:StopInstances\",\r\"ec2:TerminateInstances\",\r\"ec2:CreateTags\"\r],\r\"Resource\": [\r\"arn:aws:ec2:ap-southeast-1:764523291456:instance/*\"\r],\r\"Condition\": {\r\"StringEquals\": {\r\"ec2:InstanceType\": [\r\"t2.micro\",\r\"t3.micro\"\r]\r}\r}\r},\r{\r\"Effect\": \"Allow\",\r\"Action\": [\r\"rds:Describe*\",\r\"rds:List*\"\r],\r\"Resource\": [\r\"*\"\r]\r},\r{\r\"Effect\": \"Allow\",\r\"Action\": [\r\"rds:StartDBCluster\",\r\"rds:StopDBCluster\",\r\"rds:CreateDBCluster\",\r\"rds:CreateDBInstance\"\r],\r\"Resource\": [\r\"arn:aws:rds:ap-southeast-1:764523291456:db:*\",\r\"arn:aws:rds:ap-southeast-1:764523291456:og:*\",\r\"arn:aws:rds:ap-southeast-1:764523291456:pg:*\",\r\"arn:aws:rds:ap-southeast-1:764523291456:subgrp:*\"\r]\r},\r{\r\"Effect\": \"Allow\",\r\"Action\": [\r\"iam:ListRoles\"\r],\r\"Resource\": [\r\"*\"\r]\r}\r]\r}\rAssign the Permission to Dev-Test Test Result Trying to create on N.California region.\nCreating the t2.micro instance type\nTrying to create c1.medium instance type in Singapore Region.\nDecoding the Error using aws cloud shell aws sts decode-authorization-message --encoded-message **{error code}**\rError code in Json format: The “allowed” field is set to false, which means the action requested (“ec2:RunInstances”) is not allowed based on the specified conditions (The EC2 instance type).\n{\r\"allowed\": false,\r\"explicitDeny\": false,\r\"matchedStatements\": {\r\"items\": []\r},\r\"failures\": {\r\"items\": []\r},\r\"context\": {\r\"principal\": {\r\"id\": \"AIDA3EAJDUNANEJ2HMQHF\",\r\"name\": \"dev-test\",\r\"arn\": \"arn:aws:iam::764523291456:user/dev-test\"\r},\r\"action\": \"ec2:RunInstances\",\r\"resource\": \"arn:aws:ec2:ap-southeast-1:764523291456:instance/*\",\r\"conditions\": {\r\"items\": [\r{\r\"key\": \"ec2:InstanceMarketType\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"on-demand\"\r}\r]\r}\r},\r{\r\"key\": \"aws:Resource\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"instance/*\"\r}\r]\r}\r},\r{\r\"key\": \"aws:Account\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"764523291456\"\r}\r]\r}\r},\r{\r\"key\": \"ec2:AvailabilityZone\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"ap-southeast-1c\"\r}\r]\r}\r},\r{\r\"key\": \"ec2:ebsOptimized\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"false\"\r}\r]\r}\r},\r{\r\"key\": \"ec2:IsLaunchTemplateResource\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"false\"\r}\r]\r}\r},\r{\r\"key\": \"ec2:InstanceType\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"c1.medium\"\r}\r]\r}\r},\r{\r\"key\": \"ec2:RootDeviceType\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"ebs\"\r}\r]\r}\r},\r{\r\"key\": \"aws:Region\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"ap-southeast-1\"\r}\r]\r}\r},\r{\r\"key\": \"aws:Service\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"ec2\"\r}\r]\r}\r},\r{\r\"key\": \"ec2:InstanceID\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"*\"\r}\r]\r}\r},\r{\r\"key\": \"aws:Type\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"instance\"\r}\r]\r}\r},\r{\r\"key\": \"ec2:Tenancy\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"default\"\r}\r]\r}\r},\r{\r\"key\": \"ec2:Region\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"ap-southeast-1\"\r}\r]\r}\r},\r{\r\"key\": \"aws:ARN\",\r\"values\": {\r\"items\": [\r{\r\"value\": \"arn:aws:ec2:ap-southeast-1:764523291456:instance/*\"\r}\r]\r}\r}\r]\r}\r}\r}\r:wq!\n","wordCount":"460","inLanguage":"en","datePublished":"2023-10-20T00:00:00Z","dateModified":"2023-10-20T00:00:00Z","author":{"@type":"Person","name":"Win Yan Naing Htut"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://khawstech.com/posts/iam-policy/"},"publisher":{"@type":"Organization","name":"Khaw's Blog","logo":{"@type":"ImageObject","url":"https://khawstech.com/%3Clink%20/%20abs%20url%3E"}}}</script></head><body id=top><script>if(localStorage.getItem("pref-theme")==="dark"){document.body.classList.add('dark');}else if(localStorage.getItem("pref-theme")==="light"){document.body.classList.remove('dark')}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.body.classList.add('dark');}</script><header class=header><nav class=nav><div class=logo><a href=https://khawstech.com/ accesskey=h title="Home (Alt + H)"><img src=https://khawstech.com/apple-touch-icon.png alt aria-label=logo height=35>Home</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://khawstech.com/archives/ title=Archives><span>Archives</span></a></li><li><a href=https://google.com title="Need to know something?"><span>Need to know something?</span>&nbsp;<svg fill="none" shape-rendering="geometricPrecision" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class=post-title>How IAM Policy working?</h1><div class=post-meta><span title="2023-10-20 00:00:00 +0000 UTC">October 20, 2023</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;460 words&nbsp;·&nbsp;Win Yan Naing Htut</div></header><div class=toc><details><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><nav id=TableOfContents><ul><li><ul><li><a href=#objective><strong>Objective</strong></a></li><li><a href=#iam-policy><strong>IAM Policy</strong></a></li><li><a href=#assign-the-permission-to-dev-test><strong>Assign the Permission to Dev-Test</strong></a></li><li><a href=#test-result><strong>Test Result</strong></a></li><li><a href=#decoding-the-error-using-aws-cloud-shell><strong>Decoding the Error using aws cloud shell</strong></a></li></ul></li></ul></nav></div></details></div><div class=post-content><h3 id=objective><strong>Objective</strong><a hidden class=anchor aria-hidden=true href=#objective>#</a></h3><p>IAM Policy</p><ul><li>Create EC2 Instances</li><li>Specific Instance Type (t2.micro, t3.micro)</li><li>Specific Region (ap-southeast-1)</li><li>Create RDS Instances</li><li>Specific Region (ap-southeast-1)</li></ul><p>Create IAM User
+Attach the above policy.</p><h3 id=iam-policy><strong>IAM Policy</strong><a hidden class=anchor aria-hidden=true href=#iam-policy>#</a></h3><p><img loading=lazy src=/howiamworking/Untitled.png alt=Untitled></p><div class=highlight><pre class=chroma><code class=language-json data-lang=json><span class=p>{</span>
+    <span class=nt>&#34;Version&#34;</span><span class=p>:</span> <span class=s2>&#34;2012-10-17&#34;</span><span class=p>,</span>
+    <span class=nt>&#34;Statement&#34;</span><span class=p>:</span> <span class=p>[</span>
+        <span class=p>{</span>
+            <span class=nt>&#34;Effect&#34;</span><span class=p>:</span> <span class=s2>&#34;Allow&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;Action&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;ec2:DescribeAccountAttributes&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:DescribeInstances&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:DescribeImages&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:DescribeInstanceTypes&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:DescribeKeyPairs&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:CreateKeyPair&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:DescribeVpcs&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:DescribeSubnets&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:DescribeSecurityGroups&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:CreateSecurityGroup&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:AuthorizeSecurityGroupIngress&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;Resource&#34;</span><span class=p>:</span> <span class=s2>&#34;*&#34;</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+            <span class=nt>&#34;Effect&#34;</span><span class=p>:</span> <span class=s2>&#34;Allow&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;Action&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:RunInstances&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;Resource&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;arn:aws:ec2:ap-southeast-1:764523291456:network-interface/*&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;arn:aws:ec2:ap-southeast-1:764523291456:volume/*&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;arn:aws:ec2:ap-southeast-1:764523291456:key-pair/*&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;arn:aws:ec2:ap-southeast-1:764523291456:security-group/*&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;arn:aws:ec2:ap-southeast-1:764523291456:subnet/subnet-*&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;arn:aws:ec2:ap-southeast-1::image/ami-*&#34;</span>
+            <span class=p>]</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+            <span class=nt>&#34;Effect&#34;</span><span class=p>:</span> <span class=s2>&#34;Allow&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;Action&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;ec2:RunInstances&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:StartInstances&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:StopInstances&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:TerminateInstances&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;ec2:CreateTags&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;Resource&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;arn:aws:ec2:ap-southeast-1:764523291456:instance/*&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;Condition&#34;</span><span class=p>:</span> <span class=p>{</span>
+                <span class=nt>&#34;StringEquals&#34;</span><span class=p>:</span> <span class=p>{</span>
+                    <span class=nt>&#34;ec2:InstanceType&#34;</span><span class=p>:</span> <span class=p>[</span>
+                        <span class=s2>&#34;t2.micro&#34;</span><span class=p>,</span>
+                        <span class=s2>&#34;t3.micro&#34;</span>
+                    <span class=p>]</span>
+                <span class=p>}</span>
+            <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+            <span class=nt>&#34;Effect&#34;</span><span class=p>:</span> <span class=s2>&#34;Allow&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;Action&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;rds:Describe*&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;rds:List*&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;Resource&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;*&#34;</span>
+            <span class=p>]</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+            <span class=nt>&#34;Effect&#34;</span><span class=p>:</span> <span class=s2>&#34;Allow&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;Action&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;rds:StartDBCluster&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;rds:StopDBCluster&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;rds:CreateDBCluster&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;rds:CreateDBInstance&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;Resource&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;arn:aws:rds:ap-southeast-1:764523291456:db:*&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;arn:aws:rds:ap-southeast-1:764523291456:og:*&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;arn:aws:rds:ap-southeast-1:764523291456:pg:*&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;arn:aws:rds:ap-southeast-1:764523291456:subgrp:*&#34;</span>
+            <span class=p>]</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+            <span class=nt>&#34;Effect&#34;</span><span class=p>:</span> <span class=s2>&#34;Allow&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;Action&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;iam:ListRoles&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;Resource&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;*&#34;</span>
+            <span class=p>]</span>
+        <span class=p>}</span>
+    <span class=p>]</span>
+<span class=p>}</span>
+</code></pre></div><h3 id=assign-the-permission-to-dev-test><strong>Assign the Permission to Dev-Test</strong><a hidden class=anchor aria-hidden=true href=#assign-the-permission-to-dev-test>#</a></h3><p><img loading=lazy src=/howiamworking/Untitled%201.png alt=Untitled></p><h3 id=test-result><strong>Test Result</strong><a hidden class=anchor aria-hidden=true href=#test-result>#</a></h3><p>Trying to create on N.California region.</p><p><img loading=lazy src=/howiamworking/Untitled%202.png alt=Untitled></p><p>Creating the t2.micro instance type</p><p><img loading=lazy src=/howiamworking/Untitled%203.png alt=Untitled></p><p><img loading=lazy src=/howiamworking/Untitled%204.png alt=Untitled></p><p>Trying to create c1.medium instance type in Singapore Region.</p><p><img loading=lazy src=/howiamworking/Untitled%205.png alt=Untitled></p><p><img loading=lazy src=/howiamworking/Untitled%206.png alt=Untitled></p><h3 id=decoding-the-error-using-aws-cloud-shell><strong>Decoding the Error using aws cloud shell</strong><a hidden class=anchor aria-hidden=true href=#decoding-the-error-using-aws-cloud-shell>#</a></h3><div class=highlight><pre class=chroma><code class=language-bash data-lang=bash>aws sts decode-authorization-message --encoded-message **<span class=o>{</span>error code<span class=o>}</span>**
+</code></pre></div><p><img loading=lazy src=/howiamworking/Untitled%207.png alt=Untitled></p><p>Error code in Json format: The &ldquo;allowed&rdquo; field is set to false, which means the action requested (&ldquo;ec2:RunInstances&rdquo;) is not allowed based on the specified conditions (The EC2 instance type).</p><div class=highlight><pre class=chroma><code class=language-json data-lang=json><span class=p>{</span>
+  <span class=nt>&#34;allowed&#34;</span><span class=p>:</span> <span class=kc>false</span><span class=p>,</span>
+  <span class=nt>&#34;explicitDeny&#34;</span><span class=p>:</span> <span class=kc>false</span><span class=p>,</span>
+  <span class=nt>&#34;matchedStatements&#34;</span><span class=p>:</span> <span class=p>{</span>
+    <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[]</span>
+  <span class=p>},</span>
+  <span class=nt>&#34;failures&#34;</span><span class=p>:</span> <span class=p>{</span>
+    <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[]</span>
+  <span class=p>},</span>
+  <span class=nt>&#34;context&#34;</span><span class=p>:</span> <span class=p>{</span>
+    <span class=nt>&#34;principal&#34;</span><span class=p>:</span> <span class=p>{</span>
+      <span class=nt>&#34;id&#34;</span><span class=p>:</span> <span class=s2>&#34;AIDA3EAJDUNANEJ2HMQHF&#34;</span><span class=p>,</span>
+      <span class=nt>&#34;name&#34;</span><span class=p>:</span> <span class=s2>&#34;dev-test&#34;</span><span class=p>,</span>
+      <span class=nt>&#34;arn&#34;</span><span class=p>:</span> <span class=s2>&#34;arn:aws:iam::764523291456:user/dev-test&#34;</span>
+    <span class=p>},</span>
+    <span class=nt>&#34;action&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:RunInstances&#34;</span><span class=p>,</span>
+    <span class=nt>&#34;resource&#34;</span><span class=p>:</span> <span class=s2>&#34;arn:aws:ec2:ap-southeast-1:764523291456:instance/*&#34;</span><span class=p>,</span>
+    <span class=nt>&#34;conditions&#34;</span><span class=p>:</span> <span class=p>{</span>
+      <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:InstanceMarketType&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;on-demand&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;aws:Resource&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;instance/*&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;aws:Account&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;764523291456&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:AvailabilityZone&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;ap-southeast-1c&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:ebsOptimized&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;false&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:IsLaunchTemplateResource&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;false&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:InstanceType&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;c1.medium&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:RootDeviceType&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;ebs&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;aws:Region&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;ap-southeast-1&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;aws:Service&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:InstanceID&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;*&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;aws:Type&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;instance&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:Tenancy&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;default&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;ec2:Region&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;ap-southeast-1&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>},</span>
+        <span class=p>{</span>
+          <span class=nt>&#34;key&#34;</span><span class=p>:</span> <span class=s2>&#34;aws:ARN&#34;</span><span class=p>,</span>
+          <span class=nt>&#34;values&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;items&#34;</span><span class=p>:</span> <span class=p>[</span>
+              <span class=p>{</span>
+                <span class=nt>&#34;value&#34;</span><span class=p>:</span> <span class=s2>&#34;arn:aws:ec2:ap-southeast-1:764523291456:instance/*&#34;</span>
+              <span class=p>}</span>
+            <span class=p>]</span>
+          <span class=p>}</span>
+        <span class=p>}</span>
+      <span class=p>]</span>
+    <span class=p>}</span>
+  <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>:wq!</p></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=next href=https://khawstech.com/posts/networking-services-in-aws/><span class=title>Next »</span><br><span>Networking Services in AWS</span></a></nav><div class=share-buttons><a target=_blank rel="noopener noreferrer" aria-label="share How IAM Policy working? on twitter" href="https://twitter.com/intent/tweet/?text=How%20IAM%20Policy%20working%3f&url=https%3a%2f%2fkhawstech.com%2fposts%2fiam-policy%2f&hashtags="><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512h-386.892c-34.524.0-62.554-28.03-62.554-62.554v-386.892c0-34.524 28.029-62.554 62.554-62.554h386.892zm-253.927 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z" /></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share How IAM Policy working? on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fkhawstech.com%2fposts%2fiam-policy%2f&title=How%20IAM%20Policy%20working%3f&summary=How%20IAM%20Policy%20working%3f&source=https%3a%2f%2fkhawstech.com%2fposts%2fiam-policy%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512h-386.892c-34.524.0-62.554-28.03-62.554-62.554v-386.892c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0v-129.439c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02v-126.056c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768h75.024zm-307.552-334.556c-25.674.0-42.448 16.879-42.448 39.002.0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z" /></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share How IAM Policy working? on facebook" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fkhawstech.com%2fposts%2fiam-policy%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978v-192.915h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554v-386.892c0-34.524 28.029-62.554 62.554-62.554h386.892z" /></svg></a></div></footer></article></main><footer class=footer><span>&copy; 2023 <a href=https://khawstech.com/>Khaw's Blog</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z" /></svg></a><script>let menu=document.getElementById('menu')
+if(menu){menu.scrollLeft=localStorage.getItem("menu-scroll-position");menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft);}}
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{anchor.addEventListener("click",function(e){e.preventDefault();var id=this.getAttribute("href").substr(1);if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({behavior:"smooth"});}else{document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();}
+if(id==="top"){history.replaceState(null,null," ");}else{history.pushState(null,null,`#${id}`);}});});</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){if(document.body.scrollTop>800||document.documentElement.scrollTop>800){mybutton.style.visibility="visible";mybutton.style.opacity="1";}else{mybutton.style.visibility="hidden";mybutton.style.opacity="0";}};</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{if(document.body.className.includes("dark")){document.body.classList.remove('dark');localStorage.setItem("pref-theme",'light');}else{document.body.classList.add('dark');localStorage.setItem("pref-theme",'dark');}})</script><script>document.querySelectorAll('pre > code').forEach((codeblock)=>{const container=codeblock.parentNode.parentNode;const copybutton=document.createElement('button');copybutton.classList.add('copy-code');copybutton.innerHTML='copy';function copyingDone(){copybutton.innerHTML='copied!';setTimeout(()=>{copybutton.innerHTML='copy';},2000);}
+copybutton.addEventListener('click',(cb)=>{if('clipboard'in navigator){navigator.clipboard.writeText(codeblock.textContent);copyingDone();return;}
+const range=document.createRange();range.selectNodeContents(codeblock);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);try{document.execCommand('copy');copyingDone();}catch(e){};selection.removeRange(range);});if(container.classList.contains("highlight")){container.appendChild(copybutton);}else if(container.parentNode.firstChild==container){}else if(codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"){codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);}else{codeblock.parentNode.appendChild(copybutton);}});</script></body></html>
