@@ -28,7 +28,7 @@ Objective  To create AWS Key Pair using Cloudformation. (Using the default profi
     </item>
     
     <item>
-      <title>CreatingKeyPair</title>
+      <title>EC2 &#43; Keypair creation</title>
       <link>https://khawstech.com/posts/ec2-&#43;-keypair-creation/</link>
       <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
       
@@ -42,18 +42,6 @@ Describe the key pair: aws ec2 describe-key-pairs --filters Name=key-name,Values
     </item>
     
     <item>
-      <title>CreatingKeyPair</title>
-      <link>https://khawstech.com/posts/vpcwithcfn/</link>
-      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://khawstech.com/posts/vpcwithcfn/</guid>
-      <description>VPC creation with CFN AWS::EC2::VPC - AWS CloudFormation
-AWS::EC2::Subnet - AWS CloudFormation
-AWS::EC2::NatGateway - AWS CloudFormation
-Objective  To create AWS VPC,Public Subnets, Private Subnets and NAT Gateway using Cloudformation.  Diagram Main Template AWSTemplateFormatVersion:&amp;#39;2010-09-09&amp;#39;Description:CreatingVPCusingCFNResources:# NewVPCwynhVPC:Type:AWS::EC2::VPCProperties:CidrBlock:192.168.0.0/16EnableDnsHostnames:trueEnableDnsSupport:trueTags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;wynhVPC&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# public-subnet-1pubSubnet1:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.0.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1a&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;pubSubnet1&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# public-subnet-2pubSubnet2:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.1.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1b&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;pubSubnet2&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# public-subnet-3pubSubnet3:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.2.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1c&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;pubSubnet3&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# private-subnet-1privateSubnet1:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.3.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1a&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;privateSubnet1&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# private-subnet-2privateSubnet2:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.4.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1b&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;privateSubnet2&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# private-subnet-3privateSubnet3:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.5.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1c&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;privateSubnet3&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# internet-gatewaywynhIGW:Type:AWS::EC2::InternetGatewayProperties:Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;wynhIGW&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# VPC &amp;lt;--&amp;gt; IGW attachmentVPCtoIGW:Type:AWS::EC2::VPCGatewayAttachmentProperties:VpcId:!</description>
-    </item>
-    
-    <item>
       <title>How IAM Policy working?</title>
       <link>https://khawstech.com/posts/iam-policy/</link>
       <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
@@ -62,6 +50,18 @@ Objective  To create AWS VPC,Public Subnets, Private Subnets and NAT Gateway usi
       <description>Objective IAM Policy
  Create EC2 Instances Specific Instance Type (t2.micro, t3.micro) Specific Region (ap-southeast-1) Create RDS Instances Specific Region (ap-southeast-1)  Create IAM User Attach the above policy.
 IAM Policy {&amp;#34;Version&amp;#34;: &amp;#34;2012-10-17&amp;#34;,&amp;#34;Statement&amp;#34;: [{&amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34;,&amp;#34;Action&amp;#34;: [&amp;#34;ec2:DescribeAccountAttributes&amp;#34;,&amp;#34;ec2:DescribeInstances&amp;#34;,&amp;#34;ec2:DescribeImages&amp;#34;,&amp;#34;ec2:DescribeInstanceTypes&amp;#34;,&amp;#34;ec2:DescribeKeyPairs&amp;#34;,&amp;#34;ec2:CreateKeyPair&amp;#34;,&amp;#34;ec2:DescribeVpcs&amp;#34;,&amp;#34;ec2:DescribeSubnets&amp;#34;,&amp;#34;ec2:DescribeSecurityGroups&amp;#34;,&amp;#34;ec2:CreateSecurityGroup&amp;#34;,&amp;#34;ec2:AuthorizeSecurityGroupIngress&amp;#34;],&amp;#34;Resource&amp;#34;: &amp;#34;*&amp;#34;},{&amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34;,&amp;#34;Action&amp;#34;: &amp;#34;ec2:RunInstances&amp;#34;,&amp;#34;Resource&amp;#34;: [&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:network-interface/*&amp;#34;,&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:volume/*&amp;#34;,&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:key-pair/*&amp;#34;,&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:security-group/*&amp;#34;,&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:subnet/subnet-*&amp;#34;,&amp;#34;arn:aws:ec2:ap-southeast-1::image/ami-*&amp;#34;]},{&amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34;,&amp;#34;Action&amp;#34;: [&amp;#34;ec2:RunInstances&amp;#34;,&amp;#34;ec2:StartInstances&amp;#34;,&amp;#34;ec2:StopInstances&amp;#34;,&amp;#34;ec2:TerminateInstances&amp;#34;,&amp;#34;ec2:CreateTags&amp;#34;],&amp;#34;Resource&amp;#34;: [&amp;#34;arn:aws:ec2:ap-southeast-1:764523291456:instance/*&amp;#34;],&amp;#34;Condition&amp;#34;: {&amp;#34;StringEquals&amp;#34;: {&amp;#34;ec2:InstanceType&amp;#34;: [&amp;#34;t2.</description>
+    </item>
+    
+    <item>
+      <title>VPC Creation with CFN</title>
+      <link>https://khawstech.com/posts/vpcwithcfn/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://khawstech.com/posts/vpcwithcfn/</guid>
+      <description>VPC creation with CFN AWS::EC2::VPC - AWS CloudFormation
+AWS::EC2::Subnet - AWS CloudFormation
+AWS::EC2::NatGateway - AWS CloudFormation
+Objective  To create AWS VPC,Public Subnets, Private Subnets and NAT Gateway using Cloudformation.  Diagram Main Template AWSTemplateFormatVersion:&amp;#39;2010-09-09&amp;#39;Description:CreatingVPCusingCFNResources:# NewVPCwynhVPC:Type:AWS::EC2::VPCProperties:CidrBlock:192.168.0.0/16EnableDnsHostnames:trueEnableDnsSupport:trueTags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;wynhVPC&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# public-subnet-1pubSubnet1:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.0.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1a&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;pubSubnet1&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# public-subnet-2pubSubnet2:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.1.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1b&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;pubSubnet2&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# public-subnet-3pubSubnet3:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.2.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1c&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;pubSubnet3&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# private-subnet-1privateSubnet1:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.3.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1a&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;privateSubnet1&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# private-subnet-2privateSubnet2:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.4.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1b&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;privateSubnet2&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# private-subnet-3privateSubnet3:Type:AWS::EC2::SubnetProperties:VpcId:!RefwynhVPCCidrBlock:192.168.5.0/24MapPublicIpOnLaunch:falseAvailabilityZone:&amp;#39;ap-southeast-1c&amp;#39;Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;privateSubnet3&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# internet-gatewaywynhIGW:Type:AWS::EC2::InternetGatewayProperties:Tags:- Key:&amp;#39;Name&amp;#39;Value:&amp;#39;wynhIGW&amp;#39;- Key:&amp;#39;Region&amp;#39;Value:&amp;#39;Singapore&amp;#39;# VPC &amp;lt;--&amp;gt; IGW attachmentVPCtoIGW:Type:AWS::EC2::VPCGatewayAttachmentProperties:VpcId:!</description>
     </item>
     
     <item>
