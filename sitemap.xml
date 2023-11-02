@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://khawstech.com/posts/awsnatusingnatinstance/</loc>
+    <lastmod>2023-11-02T17:34:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://khawstech.com/</loc>
+    <lastmod>2023-11-02T17:34:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://khawstech.com/posts/</loc>
+    <lastmod>2023-11-02T17:34:23+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://khawstech.com/posts/creating-rds&#43;ec2-two-tier-architecture/</loc>
     <lastmod>2023-10-20T00:00:00+00:00</lastmod>
   </url>
@@ -19,16 +34,6 @@
   
   <url>
     <loc>https://khawstech.com/posts/iam-policy/</loc>
-    <lastmod>2023-10-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://khawstech.com/</loc>
-    <lastmod>2023-10-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://khawstech.com/posts/</loc>
     <lastmod>2023-10-20T00:00:00+00:00</lastmod>
   </url>
   

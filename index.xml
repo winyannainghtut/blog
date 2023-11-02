@@ -6,7 +6,18 @@
     <description>Recent content on Khaw&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://khawstech.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 Nov 2023 17:34:23 +0800</lastBuildDate><atom:link href="https://khawstech.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS NAT using NAT instance</title>
+      <link>https://khawstech.com/posts/awsnatusingnatinstance/</link>
+      <pubDate>Thu, 02 Nov 2023 17:34:23 +0800</pubDate>
+      
+      <guid>https://khawstech.com/posts/awsnatusingnatinstance/</guid>
+      <description>AWS NAT using NAT instance ကျွန်တော်တို့ဟာ NAT GW ကိုမသုံးပဲနဲ့ EC2 Instance တစ်ခုကို NAT အနေနဲ့သုံးလို့ရပါသေးတယ်။ NAT GW ရဲ့ Cost ကို လျော့ချချင်တာပဲဖြစ်ဖြစ်၊ NAT အနောက်မှာ ရှိတဲ့ Inbound Outbound traffic တွေကို ကိုယ်တိုင် manage လုပ်ချင်တဲ့အခါမျိုးတွေ မှာအသုံးပြုလို့ရပါတယ်။ နောက်ပြီး NAT instance ကို Private host တွေရဲ့ Jump server or Bastion server အဖြစ်လည်းအသုံးပြုနိုင်ပါသေးတယ်။အားနည်းချက်အနေနဲ့ကတော့ AWS managed မဟုတ်တာကြောင့် administrator ကလိုချင်တဲ့ပုံစံကိုကိုယ်တိုင်ပြင်ယူရပါမယ်။
+Setup: အရင်ဆုံးကျွန်တော် EC2 instance နှစ်ခုကို create လုပ်ပါမယ်။
+ကျွန်တော်ကတော့ နှစ်ခုလုံးကို Ubuntu 20.04LTS ကိုပဲအသုံးပြုထားပါတယ်။ (မှတ်ချက်။ ။ကျွန်တော်ကတော့ IP tables rule ကို အသုံးပြုပြီး NAT လုပ်သွားမှာပါ။ တစ်ကယ်လို့ AWS NAT AMI ကိုအသုံးပြုပြီးတော့လုပ်တယ်ဆိုရင်လည်းအတူတူပါပဲ)</description>
+    </item>
+    
     <item>
       <title>Creating RDS&#43;EC2 (Two Tier Architecture)</title>
       <link>https://khawstech.com/posts/creating-rds&#43;ec2-two-tier-architecture/</link>
